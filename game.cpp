@@ -12,6 +12,9 @@ namespace Tmpl8
     Sprite PlayerSpriteLeft(new Surface("assets/run-left.png"), 4);
 
     Sprite PlayerSpriteIdle(new Surface("assets/idle.png"), 5);
+
+    Sprite MouseCursor(new Surface("assets/pointer.png"), 1);
+    
     
     
     class Player
@@ -26,6 +29,9 @@ namespace Tmpl8
         void Move(float deltaTime) {
             if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41)) {
                 position.x -= speed * deltaTime;
+                if (position.x < 0) {
+					position.x = 0;
+				}
 
                 //make sprite face left
                 orientation = 1;
@@ -34,6 +40,9 @@ namespace Tmpl8
             }
             else if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44)) {
                 position.x += speed * deltaTime;
+                if (position.x > 800 - 64) {
+                    position.x = 800 - 64;
+                }
 
                 //make sprite face right
                 orientation = 0;
@@ -123,18 +132,14 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         background.Draw(screen, ((800 / 2) - 519), ((512 / 2) - 680));
-        screen->Line(mousex, 0, mousex, 511, 0xff0000);
-        screen->Line(0, mousey, 799, mousey, 0xff0000);
-        float dx = x - mousex, dy = y - mousey;
-        float dist = sqrtf(dx * dx + dy * dy);
-        if (dist < 50)
-            x += dx / dist, y += dy / dist;
         screen->Plot((int)x, (int)y, 0xffffff);
         player.Move(deltaTime);
         player.Draw(screen);
         TickCounter++;
         for (auto& animatedSprite : animatedSprites) {
             animatedSprite.Update(deltaTime);
+
         }
+        MouseCursor.DrawScaled(mousex, mousey, 32, 32, screen);
     }
 };
