@@ -8,6 +8,8 @@
     <ClCompile Include="template.cpp">
       <Filter>Template</Filter>
     </ClCompile>
+    <ClCompile Include="animation.cpp" />
+    <ClCompile Include="item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -17,6 +19,8 @@
     <ClInclude Include="template.h">
       <Filter>Template</Filter>
     </ClInclude>
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="item.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Template">

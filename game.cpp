@@ -1,6 +1,7 @@
 #include "game.h"
 #include "surface.h"
 #include "template.h"
+#include "animation.h"
 #include <windows.h>
 #include <iostream>
 #include <vector>
@@ -75,37 +76,6 @@ namespace Tmpl8
         bool idle;
     };
 
-    class Animation {
-    public:
-        int frameCount;
-        float animationTimeLeft;
-        float animationSpeed;
-        int currentFrame;
-
-        Animation(int frames, float speed) : frameCount(frames), animationTimeLeft(speed), animationSpeed(speed), currentFrame(0) {}
-
-        void Update(float deltaTime) {
-            animationTimeLeft -= deltaTime;
-            while (animationTimeLeft <= 0.0) {
-                currentFrame = (currentFrame + 1) % frameCount;
-                animationTimeLeft += animationSpeed;
-            }
-        }
-    };
-    
-    class AnimatedSprite {
-    public:
-        Sprite* sprite;
-        Animation animation;
-
-        AnimatedSprite(Sprite* spr, int frames, float speed) : sprite(spr), animation(frames, speed) {}
-
-        void Update(float deltaTime) {
-            animation.Update(deltaTime);
-            // Set animation frame for the sprite
-            sprite->SetFrame(animation.currentFrame);
-        }
-    };
 
     std::vector<AnimatedSprite> animatedSprites;
 
@@ -125,9 +95,6 @@ namespace Tmpl8
     
     Sprite background (new Surface("assets/background-export.png"), 1);
     
-    int FrameCounterWalking = 0;
-    int FrameCounterIdle = 0;
-    int TickCounter = 0;
 
     void Game::Tick(float deltaTime)
     {
@@ -135,7 +102,6 @@ namespace Tmpl8
         screen->Plot((int)x, (int)y, 0xffffff);
         player.Move(deltaTime);
         player.Draw(screen);
-        TickCounter++;
         for (auto& animatedSprite : animatedSprites) {
             animatedSprite.Update(deltaTime);
 
