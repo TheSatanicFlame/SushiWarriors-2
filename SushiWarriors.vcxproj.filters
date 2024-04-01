@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="surface.cpp">
+      <Filter>Template</Filter>
+    </ClCompile>
+    <ClCompile Include="template.cpp">
+      <Filter>Template</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="surface.h">
+      <Filter>Template</Filter>
+    </ClInclude>
+    <ClInclude Include="template.h">
+      <Filter>Template</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Template">
+      <UniqueIdentifier>{250d1985-f1c5-4148-8914-5e6449106082}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="_readme.txt">
+      <Filter>Template</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
