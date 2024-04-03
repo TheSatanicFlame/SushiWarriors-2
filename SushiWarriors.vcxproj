@@ -225,15 +225,23 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="item.cpp" />
+    <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="ScoreSystem.cpp" />
     <ClCompile Include="surface.cpp" />
+    <ClCompile Include="sushi.cpp" />
+    <ClCompile Include="SushiManager.cpp" />
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="item.h" />
+    <ClInclude Include="MouseHandler.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="ScoreSystem.h" />
     <ClInclude Include="surface.h" />
+    <ClInclude Include="sushi.h" />
+    <ClInclude Include="SushiManager.h" />
     <ClInclude Include="template.h" />
   </ItemGroup>
   <ItemGroup>

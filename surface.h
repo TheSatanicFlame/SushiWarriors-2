@@ -137,4 +137,6 @@ private:
 	int* m_Offset, *m_Width, *m_Trans, m_Height, m_CY1, m_CY2;
 };
 
+
+
 }; // namespace Tmpl8

@@ -9,7 +9,11 @@
       <Filter>Template</Filter>
     </ClCompile>
     <ClCompile Include="animation.cpp" />
-    <ClCompile Include="item.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="sushi.cpp" />
+    <ClCompile Include="SushiManager.cpp" />
+    <ClCompile Include="ScoreSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -20,7 +24,11 @@
       <Filter>Template</Filter>
     </ClInclude>
     <ClInclude Include="animation.h" />
-    <ClInclude Include="item.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="MouseHandler.h" />
+    <ClInclude Include="sushi.h" />
+    <ClInclude Include="SushiManager.h" />
+    <ClInclude Include="ScoreSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Template">

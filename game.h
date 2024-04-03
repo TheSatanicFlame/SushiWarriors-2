@@ -1,4 +1,7 @@
 #pragma once
+#include "SushiManager.h"
+#include "MouseHandler.h"
+#include "surface.h"
 
 namespace Tmpl8 {
 
@@ -18,6 +21,9 @@ public:
 	int mousex, mousey; // mouse position
 private:
 	Surface* screen;
+	SushiManager sushiManager;
+	MouseHandler* mouseHandler;
+	float gameTimeRemaining = 180.0f; // 180 seconds total game time
 };
 
 }; // namespace Tmpl8
