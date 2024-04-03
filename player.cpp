@@ -68,6 +68,25 @@ namespace Tmpl8 {
 		}
     }
 
+    void Player::Update(float deltaTime) {
+        if (speedTimer > 0) {
+            speedTimer -= deltaTime / 1000;
+            if (speedTimer <= 0) {
+                SetSpeed(originalSpeed); // Restore original speed when timer expires
+            }
+        }
+    }
+
+    void Player::SetSpeed(float newSpeed) {
+        speed = newSpeed;
+        if (newSpeed != originalSpeed) {
+            speedTimer = 10.0f; // Start countdown to reset speed if it's a temporary change
+        }
+        else {
+            speedTimer = 0.0f; // Cancel timer if setting to original speed
+        }
+    }
+
 
 
     // Implement the new methods

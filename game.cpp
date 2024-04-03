@@ -11,6 +11,8 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include <cstdlib> // For srand() and rand()
+#include <ctime>   // For time()
 
 namespace Tmpl8
 {
@@ -86,6 +88,8 @@ namespace Tmpl8
     Player player = Player();
 
     void Game::Init() {
+        srand(static_cast<unsigned int>(time(nullptr)));
+
         // Existing initialization code...
         player.SetSpriteLeft(playerSpriteLeft);
         player.SetSpriteRight(playerSpriteRight);
@@ -128,7 +132,7 @@ namespace Tmpl8
             if (gameTimeRemaining < 0) gameTimeRemaining = 0; // Prevent it from going negative
         }
 
-        std::cout << "DeltaTime: " << deltaTime << ", GameTimeRemaining: " << gameTimeRemaining << std::endl;
+        //std::cout << "DeltaTime: " << deltaTime << ", GameTimeRemaining: " << gameTimeRemaining << std::endl;
 
         background.Draw(screen, ((800 / 2) - 519), ((512 / 2) - 680));
         screen->Plot((int)x, (int)y, 0xffffff);
@@ -143,9 +147,10 @@ namespace Tmpl8
         sushiManager.DrawSushi(screen);
         sushiManager.CheckCollisions(player);
         int currentScore = scoreSystem.GetScore();
-        DrawScore(screen, currentScore, 100, 100);
-        DrawGameTimer(screen, static_cast<int>(gameTimeRemaining), 10, 10);
+        DrawScore(screen, currentScore, 10, 10);
+        DrawGameTimer(screen, static_cast<int>(gameTimeRemaining), 650, 10);
         mouseHandler->DrawCursor(mousex, mousey);
+        player.Update(deltaTime);
 
     }
 };

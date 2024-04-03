@@ -5,7 +5,7 @@
 
 namespace Tmpl8 {
 
-    enum SushiType { SPEED_UP, SPEED_DOWN, SPEED_RESET, SCORE };
+    enum SushiType {DEFAULT, SPEED_UP, SPEED_DOWN, SPEED_RESET, SCORE };
 
     class Sushi {
     public:
