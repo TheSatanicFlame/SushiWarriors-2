@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Remove exclusion patterns for SDL2 libraries
+!lib/SDL2-2.0.3/lib/x64/
+!lib/SDL2-2.0.3/lib/x86/
