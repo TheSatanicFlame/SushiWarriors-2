@@ -85,7 +85,82 @@ namespace Tmpl8
 
     float x = 400, y = 256;
 
+    ScoreSystem scoreSystem;
+
     Player player = Player();
+
+    void Game::StartGame() {
+        currentState = GameState::PLAYING;
+        gameTimeRemaining = 180.0f; // Reset game time
+        scoreSystem.ResetScore(); // Reset the score
+        player.ResetPlayer(); // Reset the player position and speed
+    }
+
+    void Game::EndGame() {
+        currentState = GameState::END;
+        // Here you can handle anything that should happen when the game ends,
+        // like stopping the game loop or displaying the end screen.
+    }
+
+    void Game::BackToMenu() {
+		currentState = GameState::START;
+		// Reset any game state or variables to start a new game
+	}
+
+    void Game::DrawStartScreen(Surface* surface) {
+        if (titleSprite) {
+            int titleX = (ScreenWidth - 320) / 2; // Center horizontally
+            int titleMarginTop = 50; // Increased top margin for title
+            titleSprite->Draw(surface, titleX, titleMarginTop);
+        }
+
+        if (playButtonSprite) {
+            int playButtonX = (ScreenWidth - 64) / 2; // Center horizontally
+            int playButtonMarginBottom = 100; // Increased bottom margin for play button
+            int playButtonY = ScreenHeight - 64 - playButtonMarginBottom; // Apply the bottom margin
+            playButtonSprite->Draw(surface, playButtonX, playButtonY);
+        }
+    }
+
+    void Game::DrawEndScreen(Surface* surface) {
+        // Draw the title at the top with a margin
+        if (titleSprite) {
+            int titleX = (ScreenWidth - 320) / 2; // Center horizontally
+            int titleY = 50; // Top margin
+            titleSprite->Draw(surface, titleX, titleY);
+        }
+
+        // Draw the "Back to Menu" button in the play button's position
+        if (backToMenuButtonSprite) { // Assuming the same sprite for simplicity; replace with backToMenuButtonSprite if different
+            backToMenuButtonSprite->Draw(surface, playButtonRect.x, playButtonRect.y);
+        }
+
+        int scoreX = (ScreenWidth - (10 * 64 * 0.4f)) / 2; // This is an approximation for centering. Adjust as needed.
+        int scoreY = 200; // Position the score below the title. Adjust as needed.
+        DrawScore(surface, scoreSystem.GetScore(), scoreX, scoreY);
+    }
+
+
+    void Game::MouseDown(int button) {
+        // Assuming button 1 is the left mouse button
+        if (button == 1) { // SDL_BUTTON_LEFT
+            switch (currentState) {
+            case GameState::START:
+                if (mousex >= playButtonRect.x && mousex <= (playButtonRect.x + playButtonRect.w) &&
+                    mousey >= playButtonRect.y && mousey <= (playButtonRect.y + playButtonRect.h)) {
+                    StartGame();
+                }
+                break;
+            case GameState::END:
+                if (mousex >= restartButtonRect.x && mousex <= (restartButtonRect.x + restartButtonRect.w) &&
+                    mousey >= restartButtonRect.y && mousey <= (restartButtonRect.y + restartButtonRect.h)) {
+                    BackToMenu(); // or Init() to restart everything from scratch
+                }
+                break;
+                // No need to handle GameState::PLAYING here unless you have UI elements in this state
+            }
+        }
+    }
 
     void Game::Init() {
         srand(static_cast<unsigned int>(time(nullptr)));
@@ -100,6 +175,15 @@ namespace Tmpl8
         animatedSprites.push_back(AnimatedSprite(playerSpriteRight, 4, 150));
         animatedSprites.push_back(AnimatedSprite(playerSpriteLeft, 4, 150));
         animatedSprites.push_back(AnimatedSprite(playerSpriteIdle, 5, 150));
+
+        titleSprite = new Sprite(new Surface("assets/title.png"), 1);
+        playButtonSprite = new Sprite(new Surface("assets/play.png"), 1);
+        backToMenuButtonSprite = new Sprite(new Surface("assets/back.png"), 1); // Load your back button sprite
+
+        // Set up play button rectangle for click detection
+        int playButtonMarginBottom = 100; // Must match the margin used in DrawStartScreen
+        playButtonRect = { (ScreenWidth - 64) / 2, ScreenHeight - 64 - playButtonMarginBottom, 64, 64 };
+        restartButtonRect = { (ScreenWidth - 64) / 2, ScreenHeight - 64 - playButtonMarginBottom, 64, 64 };
 
         // Load digit sprites
         for (int i = 0; i < 10; ++i) {
@@ -123,7 +207,7 @@ namespace Tmpl8
     Sprite background (new Surface("assets/background-export.png"), 1);
 
 
-    ScoreSystem scoreSystem;
+    
 
     void Game::Tick(float deltaTime)
     {
@@ -132,25 +216,48 @@ namespace Tmpl8
             if (gameTimeRemaining < 0) gameTimeRemaining = 0; // Prevent it from going negative
         }
 
+        int currentScore = scoreSystem.GetScore();
+
         //std::cout << "DeltaTime: " << deltaTime << ", GameTimeRemaining: " << gameTimeRemaining << std::endl;
 
         background.Draw(screen, ((800 / 2) - 519), ((512 / 2) - 680));
         screen->Plot((int)x, (int)y, 0xffffff);
-        player.Move(deltaTime);
-        player.Draw(screen);
-        for (auto& animatedSprite : animatedSprites) {
-            animatedSprite.Update(deltaTime);
 
+        switch (currentState) {
+        case GameState::START:
+            // Handle start state, e.g., display start screen
+            DrawStartScreen(screen);
+            mouseHandler->DrawCursor(mousex, mousey);
+            break;
+        case GameState::PLAYING:
+            // Existing gameplay logic here
+            // Wrap the gameplay logic with the PLAYING state check
+            player.Move(deltaTime);
+            player.Draw(screen);
+            for (auto& animatedSprite : animatedSprites) {
+                animatedSprite.Update(deltaTime);
+
+            }
+            sushiManager.Update(deltaTime, gameTimeRemaining);
+            sushiManager.UpdateSushi(deltaTime);
+            sushiManager.DrawSushi(screen);
+            sushiManager.CheckCollisions(player);
+            
+            DrawScore(screen, currentScore, 10, 10);
+            DrawGameTimer(screen, static_cast<int>(gameTimeRemaining), 650, 10);
+            player.Update(deltaTime);
+            if (gameTimeRemaining <= 0) {
+                EndGame();
+            }
+            // Additional gameplay handling...
+            break;
+        case GameState::END:
+            // Handle end state, e.g., display end screen and score
+            DrawEndScreen(screen);
+            mouseHandler->DrawCursor(mousex, mousey);
+            break;
         }
-        sushiManager.Update(deltaTime, gameTimeRemaining);
-        sushiManager.UpdateSushi(deltaTime);
-        sushiManager.DrawSushi(screen);
-        sushiManager.CheckCollisions(player);
-        int currentScore = scoreSystem.GetScore();
-        DrawScore(screen, currentScore, 10, 10);
-        DrawGameTimer(screen, static_cast<int>(gameTimeRemaining), 650, 10);
-        mouseHandler->DrawCursor(mousex, mousey);
-        player.Update(deltaTime);
+        
 
     }
 };

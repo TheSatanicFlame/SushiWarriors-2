@@ -26,6 +26,7 @@ namespace Tmpl8 {
         void SetSpriteIdle(Sprite* spriteIdle);
         bool CollidesWith(const Sushi& sushi);
         void Update(float deltaTime);
+        void ResetPlayer();
 
 
     private:

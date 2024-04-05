@@ -180,15 +180,20 @@ void SushiManager::CheckCollisions(Player& player) {
             std::cout << "Collision detected! Sushi Type:" << sushi->GetType() << std::endl;
             switch (sushi->GetType()) {
             case SushiType::SPEED_UP:
-                player.SetSpeed(player.GetSpeed() + speedIncrement); // Assuming you have a method to get and set speed
+                if (player.GetSpeed() < 0.4f){
+                    player.SetSpeed(player.GetSpeed() + speedIncrement);
+                }
                 ScoreSystem::AddScore(10);
                 break;
             case SushiType::SPEED_DOWN:
-                player.SetSpeed(player.GetSpeed() - speedIncrement);
+                if (player.GetSpeed() > 0.1f) {
+					player.SetSpeed(player.GetSpeed() - speedIncrement);
+				}
                 ScoreSystem::AddScore(5);
                 break;
             case SushiType::SPEED_RESET:
                 player.ResetSpeed();
+                ScoreSystem::AddScore(20);
                 break;
             case SushiType::DEFAULT:
                 // Make sure there's no speed adjustment logic here
