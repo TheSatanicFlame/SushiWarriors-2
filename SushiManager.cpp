@@ -186,7 +186,6 @@ void SushiManager::CheckCollisions(Player& player) {
     while (it != sushiList.end()) { // Loop until the end of the list
         Sushi* sushi = *it; // Get the current sushi
         if (player.CollidesWith(*sushi)) { // Check for collision with the player
-            std::cout << "Collision detected! Sushi Type:" << sushi->GetType() << std::endl;
             switch (sushi->GetType()) { // Check the type of sushi
             case SushiType::SPEED_UP:
                 if (player.GetSpeed() < 0.4f){ // Limit speed to 0.4f
