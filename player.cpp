@@ -77,6 +77,14 @@ namespace Tmpl8 {
         }
     }
 
+    void Player::ResetPlayer()
+    {
+        position = vec2(400 - 32, 360);
+		speed = 0.2f;
+		orientation = 0;
+		idle = true;
+    }
+
     void Player::SetSpeed(float newSpeed) {
         speed = newSpeed;
         if (newSpeed != originalSpeed) {
