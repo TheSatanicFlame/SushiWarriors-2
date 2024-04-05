@@ -1,28 +1,28 @@
-#include "animation.h" // Include the class declarations
+#include "animation.h" // Including the header file for the Animation and AnimatedSprite classes.
 
 namespace Tmpl8 {
 
-    // Constructs an Animation with a specified number of frames and speed
+    // Constructor for the Animation class. It sets up an animation with a defined number of frames and animation speed.
     Animation::Animation(int frames, float speed)
         : frameCount(frames), animationTimeLeft(speed), animationSpeed(speed), currentFrame(0) {}
 
-    // Updates the animation frame based on the elapsed time (deltaTime)
+    // This function updates the current frame of an animation based on the time passed since the last update.
     void Animation::Update(float deltaTime) {
-        animationTimeLeft -= deltaTime;
+        animationTimeLeft -= deltaTime; // Decrease time left by deltaTime.
         while (animationTimeLeft <= 0.0) {
-            currentFrame = (currentFrame + 1) % frameCount; // Loop the animation
-            animationTimeLeft += animationSpeed; // Reset the timer
+            currentFrame = (currentFrame + 1) % frameCount; // Move to the next frame, or loop back to the start if at the end.
+            animationTimeLeft += animationSpeed; // Reset the time left for the next frame change.
         }
     }
 
-    // Constructs an AnimatedSprite with a given sprite, frame count, and speed
+    // Constructor for the AnimatedSprite class. It associates a sprite with an animation.
     AnimatedSprite::AnimatedSprite(Sprite* spr, int frames, float speed)
         : sprite(spr), animation(frames, speed) {}
 
-    // Updates the sprite's animation
+    // This function updates the animation for the sprite based on the elapsed time.
     void AnimatedSprite::Update(float deltaTime) {
-        animation.Update(deltaTime); // Update the animation frame
-        sprite->SetFrame(animation.currentFrame); // Update the sprite to the current frame
+        animation.Update(deltaTime); // Call the update function of the animation object.
+        sprite->SetFrame(animation.currentFrame); // Set the sprite's current frame to match the animation's current frame.
     }
 
 } // namespace Tmpl8
