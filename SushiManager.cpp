@@ -37,6 +37,7 @@ SushiManager::~SushiManager() {
     // Cleanup sushiList and release resources
     for (auto sushi : sushiList) delete sushi;
     sushiList.clear();
+    ClearSushi();
 }
 
 void SushiManager::Update(float deltaTime, float gameTimeRemaining) {
@@ -170,6 +171,14 @@ void SushiManager::DrawSushi(Surface* screen) {
         sushi->Draw(screen); // Call the Draw method of each Sushi object
     }
 }
+
+void SushiManager::ClearSushi() {
+    for (Sushi* sushi : sushiList) {
+        delete sushi; // Delete each dynamically allocated Sushi
+    }
+    sushiList.clear(); // Clear the list of pointers
+}
+
 
 void SushiManager::CheckCollisions(Player& player) {
     float speedIncrement = 0.1f; // Speed increment for speed up/down sushi

@@ -97,9 +97,11 @@ namespace Tmpl8
     }
 
     void Game::EndGame() {
+        sushiManager.ClearSushi();
         currentState = GameState::END;
         // Here you can handle anything that should happen when the game ends,
         // like stopping the game loop or displaying the end screen.
+
     }
 
     void Game::BackToMenu() {

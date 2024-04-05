@@ -15,6 +15,7 @@ namespace Tmpl8 {
         void DrawSushi(Surface* screen);
         void Update(float deltaTime, float gameTimeRemaining);
         void CheckCollisions(Player& player); // Assume Player class is available
+        void ClearSushi();
 
     private:
         float spawnTimer = 0.0f; // Time since last spawn
