@@ -10,3 +10,15 @@ Sashimi is worth 150 points
 The cakes/pots are worth 5 points and will slow you
 Milk is worth 20 points and removes any speed effects
 Maki is worth 15 points
+
+Artist Credits:
+Pixel Beverage by ToffeeHazel
+https://toffeehazel.itch.io/beverage-sprites-32x32
+Japanese Cuisine by ToffeeHazel
+https://toffeehazel.itch.io/japanese-cuisine-icons
+Ninja Asset Pack by Moose Stache
+https://moose-stache.itch.io/ninja-game-asset-pack
+Fibbertish Font by Nathan Scott
+https://caffinate.itch.io/fibberish
+Ultimate UI PixelArt Icons by Luck
+https://lucky-loops.itch.io/ultimate-ui-pixelart-icons
