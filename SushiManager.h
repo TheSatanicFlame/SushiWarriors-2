@@ -1,32 +1,32 @@
 #pragma once
-#include "sushi.h"
-#include "player.h"
-#include <vector>
+#include "sushi.h" // Assume Sushi class is available
+#include "player.h" // Assume Player class is available
+#include <vector> // Assume vector is available
 
 namespace Tmpl8 {
 
     class SushiManager {
     public:
-        SushiManager();
-        ~SushiManager();
+        SushiManager(); // Constructor
+        ~SushiManager(); // Destructor
 
-        void SpawnSushi();
-        void UpdateSushi(float deltaTime);
-        void DrawSushi(Surface* screen);
-        void Update(float deltaTime, float gameTimeRemaining);
-        void CheckCollisions(Player& player); // Assume Player class is available
-        void ClearSushi();
+        void SpawnSushi(); //Spawn sushi
+        void UpdateSushi(float deltaTime); //update sushi
+        void DrawSushi(Surface* screen); // Draw all sushi objects
+        void Update(float deltaTime, float gameTimeRemaining); // Updates based on time
+        void CheckCollisions(Player& player); // Check for collisions with player
+        void ClearSushi(); // Delete all sushi objects
 
     private:
         float spawnTimer = 0.0f; // Time since last spawn
         float spawnRate = 2.0f; // Initial spawn rate in seconds
 
-        std::vector<Sushi*> sushiList;
-        Sprite* GetSpriteForScoreSushi();
-        Sprite* GetSpriteForSushiType(SushiType type);
-        Sprite* GetSpriteForSpeedUpSushi();
-        Sprite* GetSpriteForSpeedDownSushi();
-        Sprite* GetSpriteResetSushi();
+        std::vector<Sushi*> sushiList; // List of sushi objects
+        Sprite* GetSpriteForScoreSushi(); //get sprite for score sushi
+        Sprite* GetSpriteForSushiType(SushiType type); //get sprite for sushi type
+        Sprite* GetSpriteForSpeedUpSushi(); //get sprite for speed up sushi
+        Sprite* GetSpriteForSpeedDownSushi(); //get sprite for speed down sushi
+        Sprite* GetSpriteResetSushi(); //get sprite for reset sushi
     };
 
 } // namespace Tmpl8

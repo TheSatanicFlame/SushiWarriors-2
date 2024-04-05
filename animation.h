@@ -1,31 +1,31 @@
-#pragma once // Ensures the file is included only once during compilation
-#include "surface.h" // Include the Surface class definition
+#pragma once // Prevents multiple inclusions of this header file in a single compilation.
+#include "surface.h" // Includes the definition for the Surface class, used here for drawing.
 
 namespace Tmpl8 {
 
-    // Defines an animation sequence
+    // This class represents an animation, holding its properties like frame count and speed.
     class Animation {
     public:
-        int frameCount; // Number of frames in the animation
-        float animationTimeLeft; // Time left until the next frame
-        float animationSpeed; // Speed of the animation
-        int currentFrame; // Index of the current frame
+        int frameCount; // Total number of frames in the animation sequence.
+        float animationTimeLeft; // Remaining time (in seconds) before transitioning to the next frame.
+        float animationSpeed; // Duration of each frame in seconds.
+        int currentFrame; // The current frame being displayed in the animation sequence.
 
-        // Constructor
+        // Initializes a new instance of the Animation class with specified frame count and speed.
         Animation(int frames, float speed);
-        // Updates the animation based on delta time
+        // Processes the animation frame updates based on the elapsed time since the last frame update.
         void Update(float deltaTime);
     };
 
-    // Connects a Sprite with an Animation, allowing the sprite to be animated
+    // This class associates a sprite (2D image) with an animation sequence, enabling animated sprites.
     class AnimatedSprite {
     public:
-        Sprite* sprite; // Pointer to the sprite
-        Animation animation; // The animation controlling the sprite's frames
+        Sprite* sprite; // Pointer to the sprite object that will be animated.
+        Animation animation; // Animation object that controls the frame sequence and speed for the sprite.
 
-        // Constructor
+        // Constructs an AnimatedSprite with a linked sprite object, number of frames, and animation speed.
         AnimatedSprite(Sprite* spr, int frames, float speed);
-        // Updates the animation and the sprite's current frame
+        // Updates the sprite's frame according to the animation, based on elapsed time.
         void Update(float deltaTime);
     };
 

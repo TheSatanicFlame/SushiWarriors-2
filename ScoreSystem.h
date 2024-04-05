@@ -2,9 +2,9 @@
 
 class ScoreSystem {
 public:
-    static void AddScore(int points);
-    static int GetScore();
-    static void ResetScore();
+    static void AddScore(int points); // Add points to score
+    static int GetScore(); // Return score
+    static void ResetScore(); // Reset score to 0
 private:
-    static int score;
+    static int score; // Score variable
 };

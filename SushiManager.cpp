@@ -1,7 +1,7 @@
-#include "SushiManager.h"
+#include "SushiManager.h" // Include SushiManager.h for the SushiManager class
 #include <stdlib.h> // For rand()
-#include "ScoreSystem.h"
-#include <iostream>
+#include "ScoreSystem.h" // Include ScoreSystem.h for the ScoreSystem class
+#include <iostream> // For std::cout
 
 namespace Tmpl8 {
 
@@ -29,7 +29,6 @@ namespace Tmpl8 {
     Sprite* barrierSprite = new Sprite(new Surface("assets/milk.png"), 1);
 
 SushiManager::SushiManager() {
-    // Load sprites or perform initialization
     
 }
 
@@ -44,8 +43,8 @@ void SushiManager::Update(float deltaTime, float gameTimeRemaining) {
     // Ensure spawn rate decreases as the game progresses to increase difficulty
 
     // Maximum and minimum spawn intervals in seconds
-    const float maxSpawnRate = 2.0f; // Maximum time between spawns at the start
-    const float minSpawnRate = 0.5f; // Minimum time between spawns for highest difficulty
+    const float maxSpawnRate = 1.5f; // Maximum time between spawns at the start
+    const float minSpawnRate = 0.2f; // Minimum time between spawns for highest difficulty
 
     // Calculate the normalized progress through the game, from 0.0 (start) to 1.0 (end)
     float progress = (180.0f - gameTimeRemaining) / 180.0f; // Assuming a 3-minute game duration
@@ -66,11 +65,11 @@ void SushiManager::Update(float deltaTime, float gameTimeRemaining) {
 void SushiManager::SpawnSushi() {
     // Define weights for each sushi type. Assume each pair is <SushiType, weight>
     std::vector<std::pair<SushiType, int>> weights = {
-        {SPEED_UP, 10},   // example weight
-        {SPEED_DOWN, 10}, // example weight
-        {SPEED_RESET, 5}, // example weight
-        {SCORE, 3},      // example weight
-        {DEFAULT, 60}     // highest chance for DEFAULT
+        {SPEED_UP, 10},   //spawn rate of speed up sushi
+        {SPEED_DOWN, 10}, //spawn rate of speed down sushi
+        {SPEED_RESET, 5}, //spawn rate of speed reset sushi
+        {SCORE, 3},      //spawn rate of score sushi
+        {DEFAULT, 60}     //spawn rate of normal sushi
     };
 
     // Calculate total weight
@@ -107,9 +106,9 @@ void SushiManager::SpawnSushi() {
 
 Sprite* SushiManager::GetSpriteForScoreSushi() {
     // Example implementation - return different sprites based on a random variant
-    int variant = rand() % 3; // Assuming 3 different sprites for demonstration
+    int variant = rand() % 3; //3 different sprites
     switch (variant) {
-    case 0: return scoreSpriteVariant1; // Assume these are valid Sprite* initialized elsewhere
+    case 0: return scoreSpriteVariant1; 
     case 1: return scoreSpriteVariant2;
     case 2: return scoreSpriteVariant3;
     default: return scoreSpriteVariant1; // Fallback case
@@ -117,9 +116,9 @@ Sprite* SushiManager::GetSpriteForScoreSushi() {
 }
 
 Sprite* SushiManager::GetSpriteForSpeedUpSushi() {
-    int variant = rand() % 3; // Assuming 3 different sprites for demonstration
+    int variant = rand() % 3; // 3 different sprites
     switch (variant) {
-    case 0: return speedUpSpriteVariant1; // Assume these are valid Sprite* initialized elsewhere
+    case 0: return speedUpSpriteVariant1;
     case 1: return speedUpSpriteVariant2;
     case 2: return speedUpSpriteVariant3;
     default: return speedUpSpriteVariant1; // Fallback case
@@ -127,9 +126,9 @@ Sprite* SushiManager::GetSpriteForSpeedUpSushi() {
 }
 
 Sprite* SushiManager::GetSpriteForSpeedDownSushi() {
-    int variant = rand() % 3; // Assuming 3 different sprites for demonstration
+    int variant = rand() % 3; // 3 different sprites
     switch (variant) {
-    case 0: return speedDownSpriteVariant1; // Assume these are valid Sprite* initialized elsewhere
+    case 0: return speedDownSpriteVariant1;
     case 1: return speedDownSpriteVariant2;
     case 2: return speedDownSpriteVariant3;
     default: return speedDownSpriteVariant1; // Fallback case
@@ -137,9 +136,9 @@ Sprite* SushiManager::GetSpriteForSpeedDownSushi() {
 }
 
 Sprite* SushiManager::GetSpriteResetSushi() {
-    int variant = rand() % 3; // Assuming 3 different sprites for demonstration
+    int variant = rand() % 3; // 3 different sprites
     switch (variant) {
-    case 0: return barrierSprite; // Assume these are valid Sprite* initialized elsewhere
+    case 0: return barrierSprite; 
     case 1: return barrierSprite;
     case 2: return barrierSprite;
     default: return barrierSprite; // Fallback case
@@ -147,11 +146,11 @@ Sprite* SushiManager::GetSpriteResetSushi() {
 }
 
 Sprite* SushiManager::GetSpriteForSushiType(SushiType type) {
-    // Example implementation - return a sprite based on the sushi type
+    // Return the appropriate sprite based on the sushi type
     switch (type) {
-    case SPEED_UP: return GetSpriteForSpeedUpSushi(); // Assume these are valid Sprite* initialized elsewhere
+    case SPEED_UP: return GetSpriteForSpeedUpSushi();
     case SPEED_DOWN: return GetSpriteForSpeedDownSushi();
-    case SCORE: return sashimiSprite; // Use the method to handle SCORE type specially
+    case SCORE: return sashimiSprite;
     case SPEED_RESET: return GetSpriteResetSushi();
     case DEFAULT: return GetSpriteForScoreSushi();
         // Add cases for other sushi types as necessary
@@ -160,6 +159,7 @@ Sprite* SushiManager::GetSpriteForSushiType(SushiType type) {
 }
 
 void SushiManager::UpdateSushi(float deltaTime) {
+    // Iterate over each sushi in the list and update it
     for (auto& sushi : sushiList) {
         sushi->Update(deltaTime);
     }
@@ -182,43 +182,43 @@ void SushiManager::ClearSushi() {
 
 void SushiManager::CheckCollisions(Player& player) {
     float speedIncrement = 0.1f; // Speed increment for speed up/down sushi
-    auto it = sushiList.begin();
-    while (it != sushiList.end()) {
-        Sushi* sushi = *it;
-        if (player.CollidesWith(*sushi)) {
+    auto it = sushiList.begin(); // Iterator to loop through the list
+    while (it != sushiList.end()) { // Loop until the end of the list
+        Sushi* sushi = *it; // Get the current sushi
+        if (player.CollidesWith(*sushi)) { // Check for collision with the player
             std::cout << "Collision detected! Sushi Type:" << sushi->GetType() << std::endl;
-            switch (sushi->GetType()) {
+            switch (sushi->GetType()) { // Check the type of sushi
             case SushiType::SPEED_UP:
-                if (player.GetSpeed() < 0.4f){
-                    player.SetSpeed(player.GetSpeed() + speedIncrement);
+                if (player.GetSpeed() < 0.4f){ // Limit speed to 0.4f
+                    player.SetSpeed(player.GetSpeed() + speedIncrement); // Increase speed
                 }
-                ScoreSystem::AddScore(10);
+                ScoreSystem::AddScore(10); // Add score
                 break;
             case SushiType::SPEED_DOWN:
-                if (player.GetSpeed() > 0.1f) {
-					player.SetSpeed(player.GetSpeed() - speedIncrement);
+                if (player.GetSpeed() > 0.1f) { // Limit speed to 0.1f
+					player.SetSpeed(player.GetSpeed() - speedIncrement); // Decrease speed
 				}
-                ScoreSystem::AddScore(5);
+                ScoreSystem::AddScore(5); // Add score
                 break;
-            case SushiType::SPEED_RESET:
-                player.ResetSpeed();
-                ScoreSystem::AddScore(20);
+            case SushiType::SPEED_RESET: // Reset speed to default
+                player.ResetSpeed(); // Reset speed to default
+                ScoreSystem::AddScore(20); // Add score
                 break;
             case SushiType::DEFAULT:
                 // Make sure there's no speed adjustment logic here
-                ScoreSystem::AddScore(15);
+                ScoreSystem::AddScore(15); // Add score
                 break;
             case SushiType::SCORE:
-                ScoreSystem::AddScore(150);
+                ScoreSystem::AddScore(150); // Add score
                 break;
                 // Handle other cases
             }
             // Common logic for all sushi types (e.g., remove sushi, add score)
             delete sushi;
-            it = sushiList.erase(it);
+            it = sushiList.erase(it); // Remove sushi from the list and advance iterator
         }
         else {
-            ++it;
+            ++it; // Move to the next sushi in the list
         }
     }
 }

@@ -6,10 +6,11 @@
 namespace Tmpl8 {
 
     Player::Player() : position(400 - 32, 360), speed(0.2f), orientation(0), idle(true),
-        spriteLeft(nullptr), spriteRight(nullptr), spriteIdle(nullptr) {}
+        spriteLeft(nullptr), spriteRight(nullptr), spriteIdle(nullptr) {} // Initialize the sprite pointers to null
 
-    void Player::Move(float deltaTime) {
-        // Implementation remains the same...
+    void Player::Move(float deltaTime) { 
+        // handle player movement
+        // Move the player to the left
         if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41)) {
             position.x -= speed * deltaTime;
             if (position.x < 0) {
@@ -21,6 +22,7 @@ namespace Tmpl8 {
             idle = false;
 
         }
+        // Move the player to the right
         else if (GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44)) {
             position.x += speed * deltaTime;
             if (position.x > 800 - 64) {
@@ -36,9 +38,10 @@ namespace Tmpl8 {
         }
     }
 
+
     bool Player::CollidesWith(const Sushi& sushi) {
         // Simple bounding box collision detection
-        // Assuming Player class has position, width, and height members
+        // Check if the player's bounding box intersects with the sushi's bounding box
         vec2 sushiPos = sushi.GetPosition();
         Sprite* sushiSprite = sushi.GetSprite();
         int sushiWidth = sushiSprite->GetWidth();
@@ -51,8 +54,7 @@ namespace Tmpl8 {
     }
 
     void Player::Draw(Surface* screen) {
-        // Updated to use sprite pointers
-        // Make sure to check if the pointers are not null
+        // Draw the player sprite
         if (spriteLeft && spriteRight && spriteIdle) {
             if (idle) {
 				spriteIdle->Draw(screen, position.x, position.y);
@@ -69,6 +71,7 @@ namespace Tmpl8 {
     }
 
     void Player::Update(float deltaTime) {
+        // Update the player's position
         if (speedTimer > 0) {
             speedTimer -= deltaTime / 1000;
             if (speedTimer <= 0) {
@@ -79,6 +82,7 @@ namespace Tmpl8 {
 
     void Player::ResetPlayer()
     {
+        // Reset the player's position and speed
         position = vec2(400 - 32, 360);
 		speed = 0.2f;
 		orientation = 0;
@@ -86,6 +90,7 @@ namespace Tmpl8 {
     }
 
     void Player::SetSpeed(float newSpeed) {
+        // Set the player's speed
         speed = newSpeed;
         if (newSpeed != originalSpeed) {
             speedTimer = 10.0f; // Start countdown to reset speed if it's a temporary change
