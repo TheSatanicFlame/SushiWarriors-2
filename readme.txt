@@ -5,6 +5,10 @@ These effects last 10 seconds You can stack 2 nigiri effects. Sweets can remove 
 We also have Sashimi, Rare but worth lots of points! and Milk, it will clear any speed effect, 
 so speed up and slow down will be removed!
 
+Movement Controls:
+A = Move Left
+D = Move Right
+
 Nigiri is worth 10 points and grants a speed boost
 Sashimi is worth 150 points
 The cakes/pots are worth 5 points and will slow you
