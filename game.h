@@ -12,6 +12,7 @@ class Surface;
 // Define the game state
 enum class GameState {
 	START,
+	HOW_TO_PLAY,
 	PLAYING,
 	END
 };
@@ -34,6 +35,7 @@ public:
 	int mousex, mousey; // mouse position
 	void DrawStartScreen(Surface* screen); // Draw the start screen
 	void DrawEndScreen(Surface* screen); // Draw the end screen
+	void DrawHowToPlayScreen(Surface* screen); // Draw the how to play screen
 private:
 	Surface* screen; // Pointer to the screen surface
 	SushiManager sushiManager; // Sushi manager
@@ -43,8 +45,13 @@ private:
 	Sprite* titleSprite = nullptr; // Title sprite
 	Sprite* playButtonSprite = nullptr; // Play button sprite
 	Sprite* backToMenuButtonSprite = nullptr; // Back to menu button sprite
+	Sprite* HowToPlaySprite = nullptr; // How to play sprite
+	Sprite* howToPlayButtonSprite = nullptr; // How to Play button sprite
+	SDL_Rect howToPlayButtonRect; // Area for the How to Play button
 	SDL_Rect playButtonRect; // Area for the play button
 	SDL_Rect restartButtonRect; // Area for the restart button
+	SDL_Rect backButtonRect; // Area for the back button
+
 };
 
 }; // namespace Tmpl8

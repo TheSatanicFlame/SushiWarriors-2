@@ -21,6 +21,7 @@ namespace Tmpl8
     Sprite playerSpriteRight(new Surface("assets/run.png"), 4);
     Sprite playerSpriteLeft(new Surface("assets/run-left.png"), 4);
     Sprite playerSpriteIdle(new Surface("assets/idle.png"), 5);
+    //Sprite for score prefix
     Sprite scorePrefixSprite(new Surface("assets/score.png"), 1);
 
     // Array for digit sprites (0-9, plus a colon for displaying time)
@@ -116,6 +117,10 @@ namespace Tmpl8
             int playButtonY = ScreenHeight - 64 - playButtonMarginBottom; // Apply margin
             playButtonSprite->Draw(surface, playButtonX, playButtonY);
         }
+
+        if (howToPlayButtonSprite) {
+            howToPlayButtonSprite->Draw(surface, howToPlayButtonRect.x, howToPlayButtonRect.y);
+        }
     }
 
     // Draws the game's end screen
@@ -135,6 +140,15 @@ namespace Tmpl8
         DrawScore(surface, scoreSystem.GetScore(), scoreX, scoreY);
     }
 
+    void Game::DrawHowToPlayScreen(Surface* surface) {
+        if (HowToPlaySprite) {
+            int instructionsX = (ScreenWidth - HowToPlaySprite->GetWidth()) / 2;
+            int instructionsY = (ScreenHeight - HowToPlaySprite->GetHeight()) / 2;
+            HowToPlaySprite->Draw(surface, instructionsX, instructionsY);
+        }
+    }
+
+
 
     // Responds to mouse button clicks within the game window.
     void Game::MouseDown(int button) {
@@ -145,9 +159,16 @@ namespace Tmpl8
             case GameState::START:
                 // In the START state, check if the click is within the play button's area.
                 // If so, initiate game start.
+
+                std::cout << "Mouse clicked at: " << mousex << ", " << mousey << std::endl;
                 if (mousex >= playButtonRect.x && mousex <= (playButtonRect.x + playButtonRect.w) &&
                     mousey >= playButtonRect.y && mousey <= (playButtonRect.y + playButtonRect.h)) {
                     StartGame();
+                }
+                if (mousex >= howToPlayButtonRect.x && mousex <= (howToPlayButtonRect.x + howToPlayButtonRect.w) &&
+                    mousey >= howToPlayButtonRect.y && mousey <= (howToPlayButtonRect.y + howToPlayButtonRect.h)) {
+                    currentState = GameState::HOW_TO_PLAY; // Change state to HOW_TO_PLAY
+                    std::cout << "How to play button clicked" << std::endl;
                 }
                 break;
             case GameState::END:
@@ -159,6 +180,14 @@ namespace Tmpl8
                 }
                 break;
                 // GameState::PLAYING does not need mouse interaction handling here.
+            case GameState::HOW_TO_PLAY:
+                // Check if the click is within the back button's area
+                if (mousex >= backButtonRect.x && mousex < (backButtonRect.x + backButtonRect.w) &&
+                    mousey >= backButtonRect.y && mousey < (backButtonRect.y + backButtonRect.h)) {
+                    // Go back to the main menu
+                    BackToMenu();
+                }
+                break;
             }
         }
     }
@@ -185,11 +214,32 @@ namespace Tmpl8
         titleSprite = new Sprite(new Surface("assets/title.png"), 1);
         playButtonSprite = new Sprite(new Surface("assets/play.png"), 1);
         backToMenuButtonSprite = new Sprite(new Surface("assets/back.png"), 1);
+        HowToPlaySprite = new Sprite(new Surface("assets/howtoplay.png"), 1);
+        howToPlayButtonSprite = new Sprite(new Surface("assets/howtoplaybtn.png"), 1);
 
         // Define interactive areas for the UI, specifically for the play and restart buttons.
         int playButtonMarginBottom = 100; // Set the bottom margin for the play button.
         playButtonRect = { (ScreenWidth - 64) / 2, ScreenHeight - 64 - playButtonMarginBottom, 64, 64 };
         restartButtonRect = { (ScreenWidth - 64) / 2, ScreenHeight - 64 - playButtonMarginBottom, 64, 64 };
+        backButtonRect = { 17, 9, 80 - 17, 72 - 9 };
+
+        int titleHeight = titleSprite->GetHeight();// Get the height of the title sprite.
+        int titleYPosition = 50; // Assuming this is the margin from the top where you draw the title.
+        int marginBetweenTitleAndButton = 20; // Margin between the bottom of the title and the top of the How to Play button.
+
+        int buttonWidth = 234; // Width of the How to Play button
+        int howToPlayButtonX = (ScreenWidth - buttonWidth) / 2; // Center the button on the screen
+
+        howToPlayButtonRect.x = howToPlayButtonX;
+
+        int howToPlayButtonY = titleYPosition + titleHeight + marginBetweenTitleAndButton;
+
+        howToPlayButtonRect.y = howToPlayButtonY;
+
+        howToPlayButtonRect.w = buttonWidth;
+        howToPlayButtonRect.h = 64;
+
+        std::cout << "How to play button position: " << howToPlayButtonRect.x << ", " << howToPlayButtonRect.y << std::endl;
 
         // Load digit sprites for use in score display and timer.
         for (int i = 0; i < 10; ++i) {
@@ -257,6 +307,11 @@ namespace Tmpl8
             if (gameTimeRemaining <= 0) {
                 EndGame();
             }
+            break;
+        case GameState::HOW_TO_PLAY:
+            DrawHowToPlayScreen(screen);
+            // Other logic for how to play screen, if necessary
+            mouseHandler->DrawCursor(mousex, mousey);
             break;
         case GameState::END:
             // Handle end state, e.g., display end screen and score
