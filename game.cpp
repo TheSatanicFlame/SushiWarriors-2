@@ -18,11 +18,10 @@ namespace Tmpl8
 {
 
     // Player sprites for different states
-    Sprite* playerSpriteRight = new Sprite(new Surface("assets/run.png"), 4);
-    Sprite* playerSpriteLeft = new Sprite(new Surface("assets/run-left.png"), 4);
-    Sprite* playerSpriteIdle = new Sprite(new Surface("assets/idle.png"), 5);
-    Sprite MouseCursor(new Surface("assets/pointer.png"), 1);
-    Sprite* scorePrefixSprite = new Sprite(new Surface("assets/score.png"), 1);
+    Sprite playerSpriteRight(new Surface("assets/run.png"), 4);
+    Sprite playerSpriteLeft(new Surface("assets/run-left.png"), 4);
+    Sprite playerSpriteIdle(new Surface("assets/idle.png"), 5);
+    Sprite scorePrefixSprite(new Surface("assets/score.png"), 1);
 
     // Array for digit sprites (0-9, plus a colon for displaying time)
     Sprite* digitSprites[11];
@@ -58,8 +57,8 @@ namespace Tmpl8
 
     // Draws the current score on the surface
     void DrawScore(Surface* surface, int score, int posX, int posY) {
-        scorePrefixSprite->Draw(surface, posX, posY); // Drawing "Score: " prefix
-        posX += scorePrefixSprite->GetWidth() + 10; // Adjust position for digits
+        scorePrefixSprite.Draw(surface, posX, posY); // Drawing "Score: " prefix
+        posX += scorePrefixSprite.GetWidth() + 10; // Adjust position for digits
 
         float scaleFactor = 0.4f; // Digit scaling factor
         int scaledWidth = static_cast<int>(64 * scaleFactor); // Scaled width for digits
@@ -170,17 +169,17 @@ namespace Tmpl8
         srand(static_cast<unsigned int>(time(nullptr))); // Seed the random number generator.
 
         // Assign predefined sprites to the player character for different states.
-        player.SetSpriteLeft(playerSpriteLeft);
-        player.SetSpriteRight(playerSpriteRight);
-        player.SetSpriteIdle(playerSpriteIdle);
+        player.SetSpriteLeft(&playerSpriteLeft);
+        player.SetSpriteRight(&playerSpriteRight);
+        player.SetSpriteIdle(&playerSpriteIdle);
 
         // Initialize the mouse handler for cursor interaction.
         mouseHandler = new MouseHandler(screen);
 
         // Populate the animatedSprites vector with sprites for animation.
-        animatedSprites.push_back(AnimatedSprite(playerSpriteRight, 4, 150));
-        animatedSprites.push_back(AnimatedSprite(playerSpriteLeft, 4, 150));
-        animatedSprites.push_back(AnimatedSprite(playerSpriteIdle, 5, 150));
+        animatedSprites.push_back(AnimatedSprite(&playerSpriteRight, 4, 150));
+        animatedSprites.push_back(AnimatedSprite(&playerSpriteLeft, 4, 150));
+        animatedSprites.push_back(AnimatedSprite(&playerSpriteIdle, 5, 150));
 
         // Load sprites for UI components like the title and play button.
         titleSprite = new Sprite(new Surface("assets/title.png"), 1);

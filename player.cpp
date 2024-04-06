@@ -102,10 +102,16 @@ namespace Tmpl8 {
 
 
 
-    // Implement the new methods
-    void Player::SetSprite(Sprite* sprite) { /* Assign to the appropriate member variable */ }
-    void Player::SetSpriteLeft(Sprite* spriteLeft) { this->spriteLeft = spriteLeft; }
-    void Player::SetSpriteRight(Sprite* spriteRight) { this->spriteRight = spriteRight; }
-    void Player::SetSpriteIdle(Sprite* spriteIdle) { this->spriteIdle = spriteIdle; }
+    void Player::SetSpriteLeft(Sprite* spriteLeft) {
+        this->spriteLeft = spriteLeft;
+    }
+
+    void Player::SetSpriteRight(Sprite* spriteRight) {
+        this->spriteRight = spriteRight;
+    }
+
+    void Player::SetSpriteIdle(Sprite* spriteIdle) {
+        this->spriteIdle = spriteIdle;
+    }
 
 } // namespace Tmpl8
